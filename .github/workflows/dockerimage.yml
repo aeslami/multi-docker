@@ -12,8 +12,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build -t aharandi/react-test -f ./client/Dockerfile.dev ./client
-      run: docker run -e CI=true aharandi/react-test npm test
+      run: |
+        docker build -t aharandi/react-test -f ./client/Dockerfile.dev ./client
+        docker run -e CI=true aharandi/react-test npm test
 
   build:
  
@@ -22,10 +23,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build -t aharandi/multi-client ./client
-      run: docker build -t aharandi/multi-nginx ./nginx
-      run: docker build -t aharandi/multi-server ./server
-      run: docker build -t aharandi/multi-worker ./worker
+      run: |
+        docker build -t aharandi/multi-client ./client
+        docker build -t aharandi/multi-nginx ./nginx
+        docker build -t aharandi/multi-server ./server
+        docker build -t aharandi/multi-worker ./worker
       
   push:
  
@@ -34,7 +36,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker push aharandi/multi-client
-      run: docker push aharandi/multi-nginx
-      run: docker push aharandi/multi-server
-      run: docker push aharandi/multi-worker
+      run: |
+        docker push aharandi/multi-client
+        docker push aharandi/multi-nginx
+        docker push aharandi/multi-server
+        docker push aharandi/multi-worker
