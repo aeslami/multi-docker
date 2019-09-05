@@ -28,16 +28,9 @@ jobs:
         docker build -t aharandi/multi-nginx ./nginx
         docker build -t aharandi/multi-server ./server
         docker build -t aharandi/multi-worker ./worker
-      
-  push:
- 
-    runs-on: ubuntu-latest
- 
-    steps:
-    - uses: actions/checkout@v1
-    - name: Build the Docker image
-      run: |
+        
         docker push aharandi/multi-client
         docker push aharandi/multi-nginx
         docker push aharandi/multi-server
         docker push aharandi/multi-worker
+
