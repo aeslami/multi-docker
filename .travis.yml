@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t aharandi/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true aharandi/react-test npm test
+
+after_success:
+  - docker build -t aharandi/multi-client ./client
+  - docker build -t aharandi/multi-nginx ./nginx
+  - docker build -t aharandi/multi-server ./server
+  - docker build -t aharandi/multi-worker ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push aharandi/multi-client
+  - docker push aharandi/multi-nginx
+  - docker push aharandi/multi-server
+  - docker push aharandi/multi-worker
