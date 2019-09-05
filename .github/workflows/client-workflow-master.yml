@@ -1,19 +1,19 @@
-name: Docker Image CI
-
-on: [push, pull_request]
-  branches:
-    - master
-    paths:
-      - client/*
-      - client/*/*
-      - client/*/*/*
-      - client/*/*/*/*
-      - client/*/*/*/*/*
-      - client/*/*/*/*/*/*
-      - client/*/*/*/*/*/*/*
-      - client/*/*/*/*/*/*/*/*
-      - client/*/*/*/*/*/*/*/*/*
-      - client/*/*/*/*/*/*/*/*/*/*
+name: Client Master
+on: 
+  push:
+    branches:
+      master:
+        paths:
+          - client/*
+          - client/*/*
+          - client/*/*/*
+          - client/*/*/*/*
+          - client/*/*/*/*/*
+          - client/*/*/*/*/*/*
+          - client/*/*/*/*/*/*/*
+          - client/*/*/*/*/*/*/*/*
+          - client/*/*/*/*/*/*/*/*/*
+          - client/*/*/*/*/*/*/*/*/*/*
 
 jobs:
   test:
