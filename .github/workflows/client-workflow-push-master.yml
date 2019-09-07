@@ -1,4 +1,4 @@
-name: Client Master
+name: Client push master
 on: 
   push:
     paths:
