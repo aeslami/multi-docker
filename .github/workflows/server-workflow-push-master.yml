@@ -1,5 +1,5 @@
 name: Server push master
-on: 
+on:
   push:
     paths:
       - server/*
@@ -17,7 +17,7 @@ jobs:
   deploy:
     name: Build, push and deploy the Docker image to Kubernetes cluster
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v1
       - name: Build server image
@@ -29,6 +29,11 @@ jobs:
         run: |
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
           docker push aharandi/multi-server:${{ github.sha }}
+      - name: Deploying to Kubernetes cluster
+        env:
+          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
+        uses: ./.github/actions/get-kubeconfig
       - name: Deploying to Kubernetes cluster
         env:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
