@@ -47,7 +47,6 @@ jobs:
           CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
         uses: ./.github/actions/get-kubeconfig
       - name: Deploying to Kubernetes cluster
-        uses: steebchen/kubectl@master
+        uses: ./.github/actions/kubectl
         with:
-          entrypoint: /bin/sh
-          args: -c "kubectl set image deployment/client-deployment client=aharandi/multi-client:${{ github.sha }}"
+          args: set image deployment/client-deployment client=aharandi/multi-client:${{ github.sha }}
