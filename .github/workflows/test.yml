@@ -35,7 +35,7 @@ jobs:
           CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
         uses: digitalocean/action-doctl@master
         with:
-          args: kubernetes cluster kubeconfig show $CLUSTER_NAME > $HOME/.kubeconfig
+          args: kubernetes cluster kubeconfig show $CLUSTER_NAME > ${HOME}/.kubeconfig
       - name: Deploying to Kubernetes cluster
         uses: docker://lachlanevenson/k8s-kubectl
         with:
