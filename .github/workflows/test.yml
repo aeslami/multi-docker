@@ -39,4 +39,5 @@ jobs:
       - name: Deploying to Kubernetes cluster
         uses: docker://lachlanevenson/k8s-kubectl
         with:
-          args: --kubeconfig=$HOME/.kubeconfig set image deployment/server-deployment server=aharandi/multi-server:${{ github.sha }}
+          entrypoint: sh
+          args: -l -c "--kubeconfig=$HOME/.kubeconfig set image deployment/server-deployment server=aharandi/multi-server:${{ github.sha }}"
