@@ -2,16 +2,16 @@ name: Server Test
 on:
   push:
     paths:
-      - server/*
-      - server/*/*
-      - server/*/*/*
-      - server/*/*/*/*
-      - server/*/*/*/*/*
-      - server/*/*/*/*/*/*
-      - server/*/*/*/*/*/*/*
-      - server/*/*/*/*/*/*/*/*
-      - server/*/*/*/*/*/*/*/*/*
-      - server/*/*/*/*/*/*/*/*/*/*
+      - test/*
+      - test/*/*
+      - test/*/*/*
+      - test/*/*/*/*
+      - test/*/*/*/*/*
+      - test/*/*/*/*/*/*
+      - test/*/*/*/*/*/*/*
+      - test/*/*/*/*/*/*/*/*
+      - test/*/*/*/*/*/*/*/*/*
+      - test/*/*/*/*/*/*/*/*/*/*
 
 jobs:
   deploy:
