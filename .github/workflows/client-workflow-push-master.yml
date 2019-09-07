@@ -50,4 +50,4 @@ jobs:
         uses: steebchen/kubectl@master
         with:
           entrypoint: /bin/sh
-          args: kubectl set image deployment/client-deployment client=aharandi/multi-client:${{ github.sha }}
+          args: -c "kubectl set image deployment/client-deployment client=aharandi/multi-client:${{ github.sha }}"
