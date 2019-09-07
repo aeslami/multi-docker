@@ -29,9 +29,12 @@ jobs:
         run: |
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
           docker push aharandi/multi-server:${{ github.sha }}
-      - name: Deploying to Kubernetes cluster
-        uses: steebchen/kubectl@master
+      - name: Get kubeconfig
         env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
+        uses: ./.github/actions/get-kubeconfig
+      - name: Deploying to Kubernetes cluster
+        uses: ./.github/actions/kubectl
         with:
           args: set image deployment/server-deployment server=aharandi/multi-server:${{ github.sha }}
