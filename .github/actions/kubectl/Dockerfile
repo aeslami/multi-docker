@@ -1,6 +1,6 @@
 FROM gcr.io/cloud-builders/kubectl
 
-RUN cat /github/home/.kube/config
+RUN cat $HOME/.kube/config
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
