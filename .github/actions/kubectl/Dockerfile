@@ -11,7 +11,7 @@ RUN curl -L https://github.com/digitalocean/doctl/releases/download/v${DOCTL_VER
 
 RUN /bin/echo "${DOCTL_SHA256}  /usr/local/bin/doctl" | sha256sum -c -
 
-RUN sh -c "doctl kubernetes cluster kubeconfig save ${CLUSTER_NAME}"
+RUN "doctl kubernetes cluster kubeconfig save ${CLUSTER_NAME}"
 
 FROM gcr.io/cloud-builders/kubectl
 
