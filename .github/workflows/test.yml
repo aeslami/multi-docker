@@ -38,7 +38,7 @@ jobs:
           args: kubernetes cluster kubeconfig show $CLUSTER_NAME > $GITHUB_WORKSPACE/.kubeconfig
       - name: Deploying to Kubernetes cluster
         env:
-          KUBECONFIG: ${{ GITHUB_WORKSPACE }}/.kubeconfig
+          KUBECONFIG: ${GITHUB_WORKSPACE}/.kubeconfig
         uses: docker://lachlanevenson/k8s-kubectl
         with:
           args: set image deployment/server-deployment server=aharandi/multi-server:${{ github.sha }}
