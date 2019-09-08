@@ -60,7 +60,6 @@ class Fib extends Component {
           />
           <button>Submit</button>
         </form>
-
         <h3>Calculated Values:</h3>
         {this.renderValues()}
       </div>
