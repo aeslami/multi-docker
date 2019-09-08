@@ -43,4 +43,4 @@ jobs:
           KUBECONFIG: ${GITHUB_WORKSPACE}/.kubeconfig
         uses: docker://lachlanevenson/k8s-kubectl
         with:
-          args: set image deployment/server-deployment server=aharandi/multi-server:${{ github.sha }}
+          args: config view
