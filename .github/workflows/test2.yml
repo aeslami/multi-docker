@@ -27,11 +27,11 @@ jobs:
         uses: digitalocean/action-doctl@master
         with:
           args: kubernetes cluster kubeconfig show $CLUSTER_NAME > /github/workspace/config
-      - name: cat
-        run: cat /github/workspace/config
       - name: Deploying to Kubernetes cluster
         env:
           KUBECONFIG: /github/workspace/config
         uses: docker://lachlanevenson/k8s-kubectl
         with:
           args: --kubeconfig /github/workspace/config config view
+      - name: cat
+        run: cat /github/workspace/config
