@@ -1,4 +1,4 @@
-name: Server push master
+name: Server master
 on:
   push:
     paths:
