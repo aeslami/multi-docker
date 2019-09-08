@@ -50,4 +50,4 @@ jobs:
           KUBECONFIG: /github/workspace/config
         uses: docker://lachlanevenson/k8s-kubectl
         with:
-          args: set image deployment/client-deployment client=aharandi/client-server:${{ github.sha }}
+          args: set image deployment/client-deployment client=aharandi/multi-client:${{ github.sha }}
