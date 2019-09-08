@@ -1,5 +1,5 @@
-name: Client push master
-on: 
+name: Client master
+on:
   push:
     paths:
       - client/*
@@ -14,39 +14,40 @@ on:
       - client/*/*/*/*/*/*/*/*/*/*
 
 jobs:
-  test:
-    name: Running client tests
+  build:
+    name: Build and publish the Docker image to Docker Hub
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
-      - name: Build the Docker image
-        run: docker build -t aharandi/react-test -f ./client/Dockerfile.dev ./client
-      - name: Run tests in Docker image
-        run: docker run -e CI=true aharandi/react-test npm test
-
-  deploy:
-    name: Build, push and deploy the Docker image to Kubernetes cluster
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v1
-      - name: Build client image
-        run: docker build -t aharandi/multi-client:${{ github.sha }} ./client
+      - name: Build server image
+        run: docker build -t aharandi/multi-client:${{ github.sha }} -t aharandi/multi-client:latest ./client
       - name: Pushing image to docker hub
         env:
           DOCKER_ID: ${{ secrets.DOCKER_ID }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-
           docker push aharandi/multi-client:${{ github.sha }}
-      - name: Get kubeconfig
+          docker push aharandi/multi-client:latest
+  deploy:
+    name: Deploy docker image to Kubernetes cluster
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Getting kubeconfig
+        if: github.event_name == 'push'
         env:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
-        uses: ./.github/actions/get-kubeconfig
-      - name: Deploying to Kubernetes cluster
-        uses: ./.github/actions/kubectl
+        uses: digitalocean/action-doctl@master
         with:
-          args: set image deployment/client-deployment client=aharandi/multi-client:${{ github.sha }}
+          args: kubernetes cluster kubeconfig show $CLUSTER_NAME > /github/workspace/config
+      - name: Deploying to Kubernetes cluster
+        if: github.event_name == 'push'
+        env:
+          KUBECONFIG: /github/workspace/config
+        uses: docker://lachlanevenson/k8s-kubectl
+        with:
+          args: set image deployment/client-deployment client=aharandi/client-server:${{ github.sha }}
