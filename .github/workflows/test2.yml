@@ -33,5 +33,3 @@ jobs:
         uses: docker://lachlanevenson/k8s-kubectl
         with:
           args: --kubeconfig /github/workspace/config config view
-      - name: cat
-        run: cat /github/workspace/config
